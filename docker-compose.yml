@@ -1,0 +1,50 @@
+services:
+  xwzx-news:
+    image: xwzx-news:latest
+    ports:
+      - "5173:5173"
+    depends_on:                              # ← 补1：确保后端先启动
+      - fastapi-news
+    restart: unless-stopped                  # ← 补2：统一重启策略
+
+  fastapi-news:
+    image: fastapi-news:latest
+    ports:
+      - "8000:8000"
+    environment:                             # ← 补3：后端必须知道数据库地址和密码
+      - LOG_LEVEL=debug
+      - DATABASE_URL=mysql+asyncmy://root:20040921@mysql:3306/news_app
+      - REDIS_URL=redis://redis:6379/0
+      - APP_DEBUG=true
+      - UVICORN_LOG_LEVEL=debug
+    depends_on:                              # ← 补1：等 MySQL 健康后再启动
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  redis: # ← 新增 Redis 服务
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  mysql:
+    image: mysql                          # ← 改1：使用你自建的镜像
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 20040921
+      # MYSQL_DATABASE 已在 Dockerfile ENV 中定义，此处可省略
+    volumes:
+      - mysql_data:/var/lib/mysql         # ← 改2：仅保留数据持久化卷
+      - ./my-custom.cnf:/etc/mysql/conf.d/my-custom.cnf  # ← 新增这一行
+
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  mysql_data:

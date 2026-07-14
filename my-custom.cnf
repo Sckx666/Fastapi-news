@@ -1,0 +1,12 @@
+[mysqld]
+# 分配 4GB 给缓冲池（16GB总内存下非常安全且高效的值）
+innodb_buffer_pool_size = 4G
+
+# 增大 redo log，减少检查点刷盘频率
+innodb_log_file_size = 1G
+
+# 开发环境改为2，异步刷盘，写入性能提升数倍（生产环境勿用）
+innodb_flush_log_at_trx_commit = 2
+
+# 关闭双写缓冲，进一步提升开发环境写入速度
+innodb_doublewrite = OFF
