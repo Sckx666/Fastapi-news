@@ -65,7 +65,9 @@ npm run dev
 > 💡 **快捷操作**：在前端文件夹内右键 → 「在终端中打开」→ 输入 `npm run dev` 即可启动。
 
 ---
-
+## ⚠️ 注意：
+** 如果需要使用ai智能问答功能，需要在xwzx-news/src/config/api.js中修改apiKey **
+---
 
 ## ❓ 常见问题
 
