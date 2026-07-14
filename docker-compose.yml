@@ -1,6 +1,6 @@
 services:
   xwzx-news:
-    image: sckx/xwzx-news
+    image: sckx/xwzx-news:1.0
     ports:
       - "5173:5173"
     depends_on:                              # ← 补1：确保后端先启动
@@ -8,7 +8,7 @@ services:
     restart: unless-stopped                  # ← 补2：统一重启策略
 
   fastapi-news:
-    image: fsckx/fastapi-news
+    image: sckx/fastapi-news:1.0
     ports:
       - "8000:8000"
     environment:                             # ← 补3：后端必须知道数据库地址和密码
@@ -29,7 +29,7 @@ services:
     restart: unless-stopped
 
   mysql:
-    image: sckx/my-mysql
+    image: sckx/my-mysql:1.0
     ports:
       - "3306:3306"
     environment:
