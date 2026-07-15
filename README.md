@@ -68,7 +68,9 @@ npm run dev
 
 ## ⚠️ 注意：
 ** 如果需要使用ai智能问答功能，需要在xwzx-news/src/config/api.js中修改apiKey **
+
 ** 如果需要修改mysql地址，请在FastApi-news/config/db_conf.py中修改ASYNC_DATABASE_URL **
+
 ** 如果需要修改redis地址，请在FastApi-news/config/redis_conf.py中修改redis_client **
 
 ** 前端：127.0.0.1：5173 **
