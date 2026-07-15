@@ -5,7 +5,7 @@ import redis.asyncio as redis
 
 # 创建Redis的连接对象
 redis_client = redis.Redis(
-    host="redis",
+    host="localhost",
     port=6379,
     db=0,
     decode_responses=True  # 解码响应结果(设为True可以把二进制类型转换为字符串类型)
